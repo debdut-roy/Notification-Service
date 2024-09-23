@@ -11,7 +11,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import com.practice.Notification_Service.DTO.EmailDto;
+import com.practice.Notification_Service.DTO.EmailNotificationDetailsDto;
 import com.practice.Notification_Service.Services.EmailSenderService;
 
 import jakarta.activation.DataSource;
@@ -33,10 +33,10 @@ public class EmailSenderServiceImpl implements EmailSenderService{
     private Logger logger = LoggerFactory.getLogger(EmailSenderServiceImpl.class);
     
     @Override
-    public String sendMail(EmailDto emailDetailsDto) {
+    public String sendMail(EmailNotificationDetailsDto emailNotificationDetailsDto) {
         try {
             Context context = new Context();
-            context.setVariable("email", emailDetailsDto);
+            context.setVariable("email", emailNotificationDetailsDto);
             
             String htmlMailContent = templateEngine.process("welcome.html", context);
         	MimeMessage mimeMessage = javaMailSender.createMimeMessage();
@@ -44,8 +44,8 @@ public class EmailSenderServiceImpl implements EmailSenderService{
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
             
             mimeMessageHelper.setFrom(fromEmail);
-            mimeMessageHelper.setTo(emailDetailsDto.getToRecipient());
-            mimeMessageHelper.setSubject(emailDetailsDto.getSubject());
+            mimeMessageHelper.setTo(emailNotificationDetailsDto.getToRecipient());
+            mimeMessageHelper.setSubject(emailNotificationDetailsDto.getSubject());
             mimeMessageHelper.setText(htmlMailContent, true);
             FileSystemResource imageSource = new FileSystemResource("src/main/resources/static/logo.png");
 			mimeMessageHelper.addInline("logo.png", imageSource);
@@ -53,8 +53,8 @@ public class EmailSenderServiceImpl implements EmailSenderService{
 
             javaMailSender.send(mimeMessage);
 
-            logger.info("Message Sent Successfully to: {}", emailDetailsDto.getToRecipient());
-            return (String.format("Email Sent Successfully to {}", emailDetailsDto.getToRecipient()));
+            logger.info("Message Sent Successfully to: {}", emailNotificationDetailsDto.getToRecipient());
+            return (String.format("Email Sent Successfully to {}", emailNotificationDetailsDto.getToRecipient()));
         }
           catch (Exception e) {
             logger.error("sendEmail() | Error : {}", e.getMessage());

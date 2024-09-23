@@ -1,8 +1,8 @@
 package com.practice.Notification_Service.Services;
 
-import com.practice.Notification_Service.DTO.EmailDto;
+import com.practice.Notification_Service.DTO.EmailNotificationDetailsDto;
 
 public interface EmailSenderService {
 
-	String sendMail(EmailDto emailDto);
+	String sendMail(EmailNotificationDetailsDto emailDto);
 }

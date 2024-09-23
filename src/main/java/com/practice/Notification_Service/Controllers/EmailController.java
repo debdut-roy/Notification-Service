@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.practice.Notification_Service.DTO.EmailDto;
+import com.practice.Notification_Service.DTO.EmailNotificationDetailsDto;
 import com.practice.Notification_Service.Services.EmailSenderService;
 
 @RestController
@@ -25,7 +25,7 @@ public class EmailController {
 	}
 	
 	@PostMapping("/sendMail")
-	public String sendEmail(@RequestBody EmailDto emailDetailsDto) {
+	public String sendEmail(@RequestBody EmailNotificationDetailsDto emailDetailsDto) {
 		return emailSenderService.sendMail(emailDetailsDto);
 	}
 }
