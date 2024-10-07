@@ -9,10 +9,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.practice.Notification_Service.DTO.EmailNotificationDetailsDto;
 import com.practice.Notification_Service.Services.EmailSenderService;
+import com.practice.Notification_Service.utilities.LogMethodExecutionTime;
 
 import jakarta.activation.DataSource;
 import jakarta.mail.internet.MimeMessage;
@@ -33,7 +35,9 @@ public class EmailSenderServiceImpl implements EmailSenderService{
     private Logger logger = LoggerFactory.getLogger(EmailSenderServiceImpl.class);
     
     @Override
-    public String sendMail(EmailNotificationDetailsDto emailNotificationDetailsDto) {
+    @Async("asyncTaskExecutor")
+    @LogMethodExecutionTime
+	public String sendMail(EmailNotificationDetailsDto emailNotificationDetailsDto) {
         try {
             Context context = new Context();
             context.setVariable("email", emailNotificationDetailsDto);

@@ -1,4 +1,4 @@
-package com.practice.Notification_Services.consumer;
+package com.practice.Notification_Services.Consumers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
